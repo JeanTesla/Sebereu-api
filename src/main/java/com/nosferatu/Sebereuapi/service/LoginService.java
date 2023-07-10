@@ -1,11 +1,11 @@
 package com.nosferatu.Sebereuapi.service;
 
-import com.nosferatu.Sebereuapi.entitie.User;
-import com.nosferatu.Sebereuapi.model.dto.request.LoginRequestDTO;
-import com.nosferatu.Sebereuapi.repository.UserRepository;
+import com.nosferatu.Sebereuapi.domain.dto.response.LoginResponseDTO;
+import com.nosferatu.Sebereuapi.domain.entity.User;
+import com.nosferatu.Sebereuapi.domain.dto.request.LoginRequestDTO;
+import com.nosferatu.Sebereuapi.domain.repository.UserRepository;
+import com.nosferatu.Sebereuapi.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class LoginService {
@@ -16,14 +16,12 @@ public class LoginService {
         this.userRepository = userRepository;
     }
 
-    public boolean exec(LoginRequestDTO loginRequestDTO) throws Exception {
-        Optional<User> userOpt = userRepository.findByEmailAndPassword(
-                loginRequestDTO.getEmail(),
-                loginRequestDTO.getPassword()
-        );
+    public LoginResponseDTO exec(LoginRequestDTO loginRequestDTO) {
+        User user = userRepository.findByEmailAndPassword(
+                        loginRequestDTO.getEmail(),
+                        loginRequestDTO.getPassword())
+                .orElseThrow(() -> new UserNotFoundException("User Not Found"));
 
-        if(userOpt.isEmpty()) throw new Exception("Nenhum usuário encontrado");
-
-        return true;
+        return LoginResponseDTO.fromUserEntity(user);
     }
 }

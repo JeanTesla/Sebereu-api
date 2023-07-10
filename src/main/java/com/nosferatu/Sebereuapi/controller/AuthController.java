@@ -1,6 +1,7 @@
 package com.nosferatu.Sebereuapi.controller;
 
-import com.nosferatu.Sebereuapi.model.dto.request.LoginRequestDTO;
+import com.nosferatu.Sebereuapi.domain.dto.request.LoginRequestDTO;
+import com.nosferatu.Sebereuapi.domain.dto.response.LoginResponseDTO;
 import com.nosferatu.Sebereuapi.service.LoginService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public boolean doLogin(@RequestBody LoginRequestDTO loginRequestDTO) throws Exception {
+    public LoginResponseDTO doLogin(@RequestBody LoginRequestDTO loginRequestDTO) {
         return loginService.exec(loginRequestDTO);
     }
 }

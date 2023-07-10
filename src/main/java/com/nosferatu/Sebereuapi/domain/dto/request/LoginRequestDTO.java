@@ -1,4 +1,4 @@
-package com.nosferatu.Sebereuapi.model.dto.request;
+package com.nosferatu.Sebereuapi.domain.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

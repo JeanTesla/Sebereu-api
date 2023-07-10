@@ -1,9 +1,12 @@
-package com.nosferatu.Sebereuapi.entitie;
+package com.nosferatu.Sebereuapi.domain.entity;
+
+import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "tbl_users")
+@Getter
 public class User {
 
     @Id

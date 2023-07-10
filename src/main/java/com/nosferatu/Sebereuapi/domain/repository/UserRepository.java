@@ -1,6 +1,6 @@
-package com.nosferatu.Sebereuapi.repository;
+package com.nosferatu.Sebereuapi.domain.repository;
 
-import com.nosferatu.Sebereuapi.entitie.User;
+import com.nosferatu.Sebereuapi.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
