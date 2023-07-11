@@ -2,6 +2,7 @@ package com.nosferatu.Sebereuapi.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,25 +11,26 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "tbl_contributions")
+@Table(name = "tbl_file_uploads")
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Contribution {
+public class FileUpload {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long contributionId;
+    private Long fileUploadId;
 
-    private Long userId;
+    private String uploadFileTitle;
 
-    private Long uploadId;
+    private String savedFileTitle;
 
-    private String title;
+    private String savedPath;
 
-    private  String description;
+    private String mimeType;
 
-    private String tags;
+    private Long size;
 
     @CreationTimestamp
     private Timestamp createdAt;

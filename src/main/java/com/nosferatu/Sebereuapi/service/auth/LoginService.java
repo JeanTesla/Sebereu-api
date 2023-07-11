@@ -1,4 +1,4 @@
-package com.nosferatu.Sebereuapi.service;
+package com.nosferatu.Sebereuapi.service.auth;
 
 import com.nosferatu.Sebereuapi.domain.dto.response.LoginResponseDTO;
 import com.nosferatu.Sebereuapi.domain.entity.User;
@@ -16,11 +16,11 @@ public class LoginService {
         this.userRepository = userRepository;
     }
 
-    public LoginResponseDTO exec(LoginRequestDTO loginRequestDTO) {
+    public LoginResponseDTO execute(LoginRequestDTO loginRequestDTO) {
         User user = userRepository.findByEmailAndPassword(
                         loginRequestDTO.getEmail(),
                         loginRequestDTO.getPassword())
-                .orElseThrow(() -> new UserNotFoundException("User Not Found"));
+                .orElseThrow(UserNotFoundException::new);
 
         return LoginResponseDTO.fromUserEntity(user);
     }
