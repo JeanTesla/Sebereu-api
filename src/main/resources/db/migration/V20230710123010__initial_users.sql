@@ -1,1 +1,0 @@
-insert into tbl_users (email, password) values ('jean@gmail.com','12345');

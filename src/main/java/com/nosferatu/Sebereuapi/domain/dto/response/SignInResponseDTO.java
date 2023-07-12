@@ -8,11 +8,11 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 @Getter
-public class LoginResponseDTO {
+public class SignInResponseDTO {
     private String email;
 
-    public static LoginResponseDTO fromUserEntity(User user){
-        return LoginResponseDTO.builder()
+    public static SignInResponseDTO fromUserEntity(User user){
+        return SignInResponseDTO.builder()
                 .email(user.getEmail())
                 .build();
     }

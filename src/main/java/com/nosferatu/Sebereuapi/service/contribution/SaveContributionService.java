@@ -4,6 +4,7 @@ import com.nosferatu.Sebereuapi.domain.dto.request.ContributionRequestDTO;
 import com.nosferatu.Sebereuapi.domain.repository.ContributionRepository;
 import com.nosferatu.Sebereuapi.domain.repository.FileUploadRepository;
 import com.nosferatu.Sebereuapi.domain.repository.UserRepository;
+import com.nosferatu.Sebereuapi.exception.UploadAlreadyAssociatedException;
 import com.nosferatu.Sebereuapi.exception.UploadNotFoundException;
 import com.nosferatu.Sebereuapi.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
@@ -28,14 +29,16 @@ public class SaveContributionService {
     }
 
     public void exec(ContributionRequestDTO contributionRequestDTO) {
-        /* TODO Além de verificar se o uploadId existe, também será necessário
-        *   criar uma lógica que impeça que um mesmo uploadId seja usado em mais de uma contribuição */
+
+        fileUploadRepository.findById(contributionRequestDTO.getUploadId())
+                .orElseThrow(UploadNotFoundException::new);
 
         userRepository.findById(contributionRequestDTO.getUserId())
                 .orElseThrow(UserNotFoundException::new);
 
-        fileUploadRepository.findById(contributionRequestDTO.getUploadId())
-                        .orElseThrow(UploadNotFoundException::new);
+        if(contributionRepository.findByUploadId(contributionRequestDTO.getUploadId()).isPresent()){
+            throw new UploadAlreadyAssociatedException();
+        }
 
         contributionRepository.save(contributionRequestDTO.toEntity());
     }

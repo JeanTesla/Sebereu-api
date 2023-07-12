@@ -4,19 +4,19 @@ import com.nosferatu.Sebereuapi.domain.dto.response.FileUploadResponseDTO;
 import com.nosferatu.Sebereuapi.domain.entity.FileUpload;
 import com.nosferatu.Sebereuapi.domain.model.MinioStoredResult;
 import com.nosferatu.Sebereuapi.domain.repository.FileUploadRepository;
-import com.nosferatu.Sebereuapi.service.minio.MinioStorageService;
+import com.nosferatu.Sebereuapi.service.minio.MinioService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UploadFileContributionService {
 
-    private final MinioStorageService minioStorageService;
+    private final MinioService minioStorageService;
 
     private final FileUploadRepository fileUploadRepository;
 
     public UploadFileContributionService(
-            MinioStorageService minioStorageService,
+            MinioService minioStorageService,
             FileUploadRepository fileUploadRepository
     ) {
         this.minioStorageService = minioStorageService;

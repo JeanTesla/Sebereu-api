@@ -2,14 +2,16 @@ package com.nosferatu.Sebereuapi.service.minio;
 
 import com.nosferatu.Sebereuapi.domain.model.MinioStoredResult;
 import com.nosferatu.Sebereuapi.exception.FileEmptyException;
-import io.minio.MinioClient;
-import io.minio.ObjectWriteResponse;
-import io.minio.PutObjectArgs;
-import io.minio.errors.MinioException;
+import io.minio.*;
+import io.minio.errors.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -17,7 +19,7 @@ import java.text.Normalizer;
 import java.util.Objects;
 
 @Service
-public class MinioStorageService {
+public class MinioService {
 
     @Value("${application.minio-default-store-path}")
     public String minioDefaultStorePath;
@@ -27,7 +29,7 @@ public class MinioStorageService {
 
     private final MinioClient minioClient;
 
-    public MinioStorageService(MinioClient minioClient) {
+    public MinioService(MinioClient minioClient) {
         this.minioClient = minioClient;
     }
 
@@ -57,5 +59,18 @@ public class MinioStorageService {
         } catch (MinioException | InvalidKeyException | IOException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ResponseEntity<InputStreamResource> teste() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        GetObjectResponse object = minioClient.getObject(
+                GetObjectArgs.builder()
+                        .bucket(minioDefaultBucket)
+                        .object("uploads/curriculo-113720301409200")
+                        .build()
+        );
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource( new ByteArrayInputStream(object.readAllBytes()) ));
     }
 }

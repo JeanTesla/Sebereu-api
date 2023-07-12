@@ -4,10 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tbl_contributions")
@@ -17,12 +22,16 @@ import java.sql.Timestamp;
 public class Contribution {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long contributionId;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    private UUID contributionId;
 
-    private Long userId;
+    private UUID userId;
 
-    private Long uploadId;
+    private UUID uploadId;
 
     private String title;
 

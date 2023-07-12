@@ -5,14 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Getter
 public class ContributionRequestDTO {
 
-    private Long userId;
+    private UUID userId;
 
-    private Long uploadId;
+    private UUID uploadId;
 
     private String title;
 
