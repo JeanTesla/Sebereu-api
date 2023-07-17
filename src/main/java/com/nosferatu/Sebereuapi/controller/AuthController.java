@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/auth")
 public class AuthController {
@@ -27,7 +29,7 @@ public class AuthController {
     }
 
     @GetMapping("/sign-in")
-    public SignInResponseDTO doSignIn(@RequestBody SignInRequestDTO signInRequestDTO) {
+    public SignInResponseDTO doSignIn(@RequestBody @Valid SignInRequestDTO signInRequestDTO) {
         return signInService.execute(signInRequestDTO);
     }
 
