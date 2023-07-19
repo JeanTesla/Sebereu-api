@@ -6,10 +6,7 @@ import com.nosferatu.Sebereuapi.domain.dto.response.SignInResponseDTO;
 import com.nosferatu.Sebereuapi.domain.dto.response.SignUpResponseDTO;
 import com.nosferatu.Sebereuapi.service.auth.SignInService;
 import com.nosferatu.Sebereuapi.service.auth.SignUpService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -28,12 +25,12 @@ public class AuthController {
         this.signUpService = signUpService;
     }
 
-    @GetMapping("/sign-in")
+    @PostMapping("/sign-in")
     public SignInResponseDTO doSignIn(@RequestBody @Valid SignInRequestDTO signInRequestDTO) {
         return signInService.execute(signInRequestDTO);
     }
 
-    @GetMapping("/sign-up")
+    @PostMapping("/sign-up")
     public SignUpResponseDTO doSignUp(@RequestBody SignUpRequestDTO signUpRequestDTO) {
         return signUpService.execute(signUpRequestDTO);
     }
