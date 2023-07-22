@@ -2,6 +2,8 @@ package com.nosferatu.Sebereuapi.controller;
 
 import com.nosferatu.Sebereuapi.domain.dto.request.ContributionRequestDTO;
 import com.nosferatu.Sebereuapi.domain.dto.response.FileUploadResponseDTO;
+import com.nosferatu.Sebereuapi.domain.entity.Contribution;
+import com.nosferatu.Sebereuapi.service.contribution.GetAllContributionService;
 import com.nosferatu.Sebereuapi.service.contribution.SaveContributionService;
 import com.nosferatu.Sebereuapi.service.contribution.UploadFileContributionService;
 import com.nosferatu.Sebereuapi.service.minio.MinioService;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/contribution")
@@ -24,25 +27,25 @@ public class ContributionController {
 
     private final UploadFileContributionService uploadFileContributionService;
 
-    private final MinioService minioService;
+    private final GetAllContributionService getAllContributionService;
 
     public ContributionController(
             SaveContributionService saveContributionService,
             UploadFileContributionService uploadFileContributionService,
-            MinioService minioService) {
+            GetAllContributionService getAllContributionService) {
         this.saveContributionService = saveContributionService;
         this.uploadFileContributionService = uploadFileContributionService;
-        this.minioService = minioService;
+        this.getAllContributionService = getAllContributionService;
     }
 
     @GetMapping(value = "/")
-    public ResponseEntity<InputStreamResource> getContribution() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
-        return minioService.teste();
+    public List<Contribution> getAllContribution() {
+        return getAllContributionService.execute();
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveContribution(@RequestBody ContributionRequestDTO contributionRequestDTO){
-        saveContributionService.exec(contributionRequestDTO);
+        saveContributionService.execute(contributionRequestDTO);
     }
 
     @PostMapping(value = "/upload-file",

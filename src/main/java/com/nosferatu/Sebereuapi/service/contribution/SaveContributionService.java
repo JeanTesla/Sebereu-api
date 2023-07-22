@@ -28,7 +28,7 @@ public class SaveContributionService {
         this.userRepository = userRepository;
     }
 
-    public void exec(ContributionRequestDTO contributionRequestDTO) {
+    public void execute(ContributionRequestDTO contributionRequestDTO) {
 
         fileUploadRepository.findById(contributionRequestDTO.getUploadId())
                 .orElseThrow(UploadNotFoundException::new);
