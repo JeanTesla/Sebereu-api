@@ -1,5 +1,7 @@
 package com.nosferatu.Sebereuapi.domain.entity;
 
+import com.nosferatu.Sebereuapi.domain.enumerated.MusicalGenreEnum;
+import com.nosferatu.Sebereuapi.domain.enumerated.SheetTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -35,9 +38,19 @@ public class Contribution {
 
     private String title;
 
-    private  String description;
+    private String artist;
 
-    private String tags;
+    private String arrangement;
+
+    private String description;
+
+    private MusicalGenreEnum musicalGenre;
+
+    private SheetTypeEnum sheetType;
+
+    private String genres;
+
+    private String instruments;
 
     @CreationTimestamp
     private Timestamp createdAt;
