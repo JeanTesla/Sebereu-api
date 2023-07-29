@@ -61,16 +61,12 @@ public class MinioService {
         }
     }
 
-    public ResponseEntity<InputStreamResource> teste() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
-        GetObjectResponse object = minioClient.getObject(
+    public GetObjectResponse get(String objectName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        return minioClient.getObject(
                 GetObjectArgs.builder()
                         .bucket(minioDefaultBucket)
-                        .object("uploads/curriculo-113720301409200")
+                        .object(objectName)
                         .build()
         );
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(new InputStreamResource( new ByteArrayInputStream(object.readAllBytes()) ));
     }
 }

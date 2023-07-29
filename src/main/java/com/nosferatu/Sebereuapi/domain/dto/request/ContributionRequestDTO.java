@@ -1,7 +1,7 @@
 package com.nosferatu.Sebereuapi.domain.dto.request;
 
-import com.nosferatu.Sebereuapi.domain.enumerated.MusicalGenreEnum;
 import com.nosferatu.Sebereuapi.domain.entity.Contribution;
+import com.nosferatu.Sebereuapi.domain.enumerated.MusicalGenreEnum;
 import com.nosferatu.Sebereuapi.domain.enumerated.SheetTypeEnum;
 import com.nosferatu.Sebereuapi.utils.Utils;
 import lombok.AllArgsConstructor;
@@ -30,9 +30,9 @@ public class ContributionRequestDTO {
 
     private SheetTypeEnum sheetType;
 
-    private List<String> genres;
+    private List<String> genrePicker;
 
-    private List<String> instruments;
+    private List<String> instrumentPicker;
 
     public Contribution toEntity(){
         return Contribution.builder()
@@ -44,8 +44,8 @@ public class ContributionRequestDTO {
                 .description(this.description)
                 .musicalGenre(this.musicalGenre)
                 .sheetType(this.sheetType)
-                .genres(Utils.stringListToString(this.genres))
-                .instruments(Utils.stringListToString(this.instruments))
+                .genrePicker(Utils.stringListToString(this.genrePicker))
+                .instrumentPicker(Utils.stringListToString(this.instrumentPicker))
                 .build();
     }
 }
