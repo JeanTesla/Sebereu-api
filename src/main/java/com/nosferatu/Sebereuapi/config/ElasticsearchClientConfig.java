@@ -9,11 +9,13 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.message.BasicHeader;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
+
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.http.HttpHeaders;
@@ -36,17 +38,6 @@ public class ElasticsearchClientConfig extends
     @Bean
     public RestHighLevelClient elasticsearchClient() {
 
-//        final ClientConfiguration clientConfiguration =
-//                ClientConfiguration
-//                        .builder()
-//                        .connectedTo(elasticSearchUrl)
-//                        .withBasicAuth(elasticSearchUser, elasticSearchPassword)
-//                        .withDefaultHeaders(
-//                                //new Header[]{new BasicHeader(HttpHeaders.ACCEPT,"application/vnd.elasticsearch+json;compatible-with=7")}
-//                                new HttpHeaders()
-//                        )
-//                        .build();
-
         final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(elasticSearchUser, elasticSearchPassword));
 
@@ -56,11 +47,6 @@ public class ElasticsearchClientConfig extends
                 .setDefaultHeaders(compatibilityHeaders());
 
         return new RestHighLevelClient(builder);
-
-
-
-
-        //return RestClients.create(clientConfiguration).rest();
     }
 
     private Header[] compatibilityHeaders() {
