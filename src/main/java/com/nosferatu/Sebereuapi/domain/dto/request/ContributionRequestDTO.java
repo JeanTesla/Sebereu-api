@@ -7,6 +7,9 @@ import com.nosferatu.Sebereuapi.utils.Utils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +38,7 @@ public class ContributionRequestDTO {
     private List<String> instrumentPicker;
 
     public Contribution toEntity(){
+
         return Contribution.builder()
                 .userId(this.userId)
                 .uploadId(this.uploadId)
@@ -46,6 +50,9 @@ public class ContributionRequestDTO {
                 .sheetType(this.sheetType)
                 .genrePicker(Utils.stringListToString(this.genrePicker))
                 .instrumentPicker(Utils.stringListToString(this.instrumentPicker))
+                .createdAt(new Date())
+                .updatedAt(new Date())
                 .build();
     }
+
 }

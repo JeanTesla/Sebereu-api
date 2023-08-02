@@ -14,17 +14,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.elasticsearch.client.ClientConfiguration;
-import org.springframework.data.elasticsearch.client.RestClients;
 import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.http.HttpHeaders;
-import org.springframework.util.MultiValueMap;
-
-import javax.persistence.Basic;
 
 @Configuration
 @EnableElasticsearchRepositories(basePackages= "com.nosferatu.Sebereuapi.domain.repository")
+@ComponentScan(basePackages = "com.nosferatu.Sebereuapi")
 public class ElasticsearchClientConfig extends
         AbstractElasticsearchConfiguration {
 

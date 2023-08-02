@@ -6,8 +6,6 @@ import com.nosferatu.Sebereuapi.domain.repository.ContributionRepository;
 import com.nosferatu.Sebereuapi.exception.ContributionNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 public class GetContributionService {
 

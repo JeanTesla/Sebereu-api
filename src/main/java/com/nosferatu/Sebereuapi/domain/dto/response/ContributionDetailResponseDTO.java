@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +36,7 @@ public class ContributionDetailResponseDTO {
 
     private List<String> instrumentPicker;
 
-    private Timestamp createdAt;
+    private Date createdAt;
 
     public static ContributionDetailResponseDTO fromContributionEntity(Contribution contribution){
         return ContributionDetailResponseDTO.builder()

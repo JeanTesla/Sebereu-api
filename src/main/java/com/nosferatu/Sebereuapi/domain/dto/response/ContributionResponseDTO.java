@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -19,7 +20,7 @@ public class ContributionResponseDTO {
 
     private String artist;
 
-    private Timestamp createdAt;
+    private Date createdAt;
 
     public static ContributionResponseDTO fromContributionEntity(Contribution contribution){
         return ContributionResponseDTO.builder()

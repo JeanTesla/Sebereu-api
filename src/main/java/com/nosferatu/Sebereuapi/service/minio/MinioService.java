@@ -51,7 +51,7 @@ public class MinioService {
                     .object(String.format(fullFilePath))
                     .contentType(file.getContentType())
                     .bucket(minioDefaultBucket)
-                    .stream(file.getInputStream(), file.getSize(), 10000000)
+                    .stream(file.getInputStream(), file.getSize(), 90000000)
                     .build());
 
             return new MinioStoredResult(pathToSave, fileNameToSave, fullFilePath, stored);
