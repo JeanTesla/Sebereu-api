@@ -29,14 +29,18 @@ public class GetFileContributionService {
 
     private final FileUploadRepository fileUploadRepository;
 
+    private final IncreaseContributionViewService increaseContributionViewService;
+
     public GetFileContributionService(
             MinioService minioService,
+            IncreaseContributionViewService increaseContributionViewService,
             ContributionRepository contributionRepository,
             FileUploadRepository fileUploadRepository
     ) {
         this.minioService = minioService;
         this.contributionRepository = contributionRepository;
         this.fileUploadRepository = fileUploadRepository;
+        this.increaseContributionViewService = increaseContributionViewService;
     }
 
     public ResponseEntity<InputStreamResource> execute(String contributionId) {
@@ -50,6 +54,8 @@ public class GetFileContributionService {
         String fullFilePath = String.format("%s/%s", upload.getSavedPath(), upload.getSavedFileTitle());
 
         try (GetObjectResponse object = minioService.get(fullFilePath)) {
+
+            increaseContributionViewService.execute(contributionId);
 
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(upload.getMimeType()))

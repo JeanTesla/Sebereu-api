@@ -26,8 +26,10 @@ public class SearchContributionController {
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<ContributionDetailResponseDTO> search(
-            @RequestParam(value = "filter") String filter
+            @RequestParam(value = "filter") String filter,
+            @RequestParam(value = "page") Integer page,
+            @RequestParam(value = "size") Integer size
     ) {
-        return searchContributionService.execute(filter);
+        return searchContributionService.execute(filter, page, size);
     }
 }

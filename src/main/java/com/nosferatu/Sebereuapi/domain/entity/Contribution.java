@@ -2,10 +2,7 @@ package com.nosferatu.Sebereuapi.domain.entity;
 
 import com.nosferatu.Sebereuapi.domain.enumerated.MusicalGenreEnum;
 import com.nosferatu.Sebereuapi.domain.enumerated.SheetTypeEnum;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -24,6 +21,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Document(indexName="contribution")
 public class Contribution {
 
@@ -51,7 +49,7 @@ public class Contribution {
 
     private String instrumentPicker;
 
-    private Long downloads;
+    private Long views;
 
     private Date createdAt;
 

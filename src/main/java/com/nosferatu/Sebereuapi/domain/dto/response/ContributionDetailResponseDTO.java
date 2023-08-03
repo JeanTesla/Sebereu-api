@@ -36,6 +36,8 @@ public class ContributionDetailResponseDTO {
 
     private List<String> instrumentPicker;
 
+    private Long views;
+
     private Date createdAt;
 
     public static ContributionDetailResponseDTO fromContributionEntity(Contribution contribution){
@@ -49,6 +51,7 @@ public class ContributionDetailResponseDTO {
                 .sheetType(contribution.getSheetType())
                 .genrePicker(Utils.stringToStringList(contribution.getGenrePicker()))
                 .instrumentPicker(Utils.stringToStringList(contribution.getInstrumentPicker()))
+                .views(contribution.getViews())
                 .createdAt(contribution.getCreatedAt())
                 .build();
     }

@@ -4,7 +4,6 @@ import com.nosferatu.Sebereuapi.domain.dto.request.ContributionRequestDTO;
 import com.nosferatu.Sebereuapi.domain.dto.response.ContributionDetailResponseDTO;
 import com.nosferatu.Sebereuapi.domain.dto.response.ContributionResponseDTO;
 import com.nosferatu.Sebereuapi.domain.dto.response.FileUploadResponseDTO;
-import com.nosferatu.Sebereuapi.domain.entity.Contribution;
 import com.nosferatu.Sebereuapi.service.contribution.*;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -31,25 +30,31 @@ public class ContributionController {
 
     private final GetContributionService getContributionService;
 
+    private final IncreaseContributionViewService increaseContributionViewService;
+
     public ContributionController(
             SaveContributionService saveContributionService,
             UploadFileContributionService uploadFileContributionService,
             GetAllContributionService getAllContributionService,
             GetFileContributionService getFileContributionService,
-            GetContributionService getContributionService) {
+            GetContributionService getContributionService,
+            IncreaseContributionViewService increaseContributionViewService) {
         this.saveContributionService = saveContributionService;
         this.uploadFileContributionService = uploadFileContributionService;
         this.getAllContributionService = getAllContributionService;
         this.getFileContributionService = getFileContributionService;
         this.getContributionService = getContributionService;
+        this.increaseContributionViewService = increaseContributionViewService;
     }
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ContributionResponseDTO> getAllContribution(
-            @RequestParam(value = "userId") UUID userId
+    public Page<ContributionResponseDTO> getAllContribution(
+            @RequestParam(value = "userId") UUID userId,
+            @RequestParam(value = "page") Integer page,
+            @RequestParam(value = "size") Integer size
     ) {
         System.out.println(userId);
-        return getAllContributionService.execute(userId);
+        return getAllContributionService.execute(userId, page, size);
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -82,6 +87,5 @@ public class ContributionController {
     ) {
         return getContributionService.execute(contributionId);
     }
-
 
 }

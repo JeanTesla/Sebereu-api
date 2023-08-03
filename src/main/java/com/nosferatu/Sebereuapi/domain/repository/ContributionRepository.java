@@ -19,10 +19,7 @@ public interface ContributionRepository extends ElasticsearchRepository<Contribu
 
     Optional<Contribution> findByUploadId(UUID uploadId);
 
-    Optional<ArrayList<Contribution>> findByUserId(UUID userId);
-
-
-    List<Contribution> findByTitleContaining(String title);
+    Page<Contribution> findByUserId(UUID userId, Pageable pageable);
 
     @Query("{\"bool\": {\n" +
             "\t\t\t\"must\": [\n" +

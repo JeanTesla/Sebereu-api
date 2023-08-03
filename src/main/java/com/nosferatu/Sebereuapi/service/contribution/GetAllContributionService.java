@@ -5,6 +5,9 @@ import com.nosferatu.Sebereuapi.domain.entity.Contribution;
 import com.nosferatu.Sebereuapi.domain.repository.ContributionRepository;
 import com.nosferatu.Sebereuapi.domain.repository.UserRepository;
 import com.nosferatu.Sebereuapi.exception.UserNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,16 +29,15 @@ public class GetAllContributionService {
         this.userRepository = userRepository;
     }
 
-    public List<ContributionResponseDTO> execute(UUID userId){
+    public Page<ContributionResponseDTO> execute(UUID userId, Integer page, Integer size){
 
         userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
-        List<Contribution> contributions = contributionRepository.findByUserId(userId).get();
+        Pageable pageRequest = PageRequest.of(page, size);
 
-        return contributions
-                .stream()
-                .map(ContributionResponseDTO::fromContributionEntity)
-                .collect(Collectors.toList());
+        Page<Contribution> contributions = contributionRepository.findByUserId(userId, pageRequest);
+
+        return contributions.map(ContributionResponseDTO::fromContributionEntity);
     }
 }
 
