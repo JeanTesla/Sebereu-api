@@ -75,10 +75,11 @@ public class ContributionController {
 
     @GetMapping(value = "/{contributionId}/file", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<InputStreamResource> getContributionFile(
-            @PathVariable(value = "contributionId") String contributionId
+            @PathVariable(value = "contributionId") String contributionId,
+            @RequestParam(value = "requestUserId") UUID requestUserId
     ) {
         System.out.println(contributionId);
-        return getFileContributionService.execute(contributionId);
+        return getFileContributionService.execute(contributionId, requestUserId);
     }
 
     @GetMapping(value = "/{contributionId}", produces = MediaType.APPLICATION_JSON_VALUE)
