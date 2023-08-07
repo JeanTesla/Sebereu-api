@@ -1,9 +1,6 @@
 package com.nosferatu.Sebereuapi.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,6 +12,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "tbl_users")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,7 +26,10 @@ public class User {
     )
     private UUID userId;
 
+    private UUID profileImageUploadId;
+
     private String email;
+
     private String password;
 
     @CreationTimestamp

@@ -21,9 +21,6 @@ import java.util.Objects;
 @Service
 public class MinioService {
 
-    @Value("${application.minio-default-store-path}")
-    public String minioDefaultStorePath;
-
     @Value("${application.minio-default-bucket}")
     public String minioDefaultBucket;
 
@@ -33,17 +30,18 @@ public class MinioService {
         this.minioClient = minioClient;
     }
 
-    public MinioStoredResult store(MultipartFile file, String title) {
+    public MinioStoredResult store(MultipartFile file, String title, String storePath, boolean withNanoTime) {
 
         if (Objects.isNull(file) || file.isEmpty()) throw new FileEmptyException();
 
-        String pathToSave = "/" + minioDefaultStorePath;
-        String fileNameToSave = String.format("%s-%s",
+        String pathToSave = "/" + storePath;
+        String fileNameToSave = generateFileName(
                 Normalizer.normalize(
                         title.replace(' ', '-')
                                 .toLowerCase(), Normalizer.Form.NFD
-                ).replaceAll("[^\\p{ASCII}]", "")
-                , System.nanoTime());
+                ).replaceAll("[^\\p{ASCII}]", ""), withNanoTime
+        );
+
         String fullFilePath = pathToSave + "/" + fileNameToSave;
 
         try {
@@ -68,5 +66,11 @@ public class MinioService {
                         .object(objectName)
                         .build()
         );
+    }
+
+    private String generateFileName(String formattedFileName, boolean withNanoSecond){
+        return withNanoSecond ? String.format("%s-%s",formattedFileName, System.nanoTime())
+                : String.format("%s",formattedFileName);
+
     }
 }

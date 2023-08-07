@@ -20,6 +20,8 @@ public class ContributionDetailResponseDTO {
 
     private String contributionId;
 
+    private UUID userId;
+
     private String title;
 
     private String artist;
@@ -43,6 +45,7 @@ public class ContributionDetailResponseDTO {
     public static ContributionDetailResponseDTO fromContributionEntity(Contribution contribution){
         return ContributionDetailResponseDTO.builder()
                 .contributionId(contribution.getId())
+                .userId(contribution.getUserId())
                 .title(contribution.getTitle())
                 .artist(contribution.getArtist())
                 .arrangement(contribution.getArrangement())
