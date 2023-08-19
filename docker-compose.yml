@@ -1,0 +1,53 @@
+version: '2'
+
+services:
+  minio:
+    image: 'bitnami/minio:latest'
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=12345678
+    command: minio server /data --console-address :9001
+    volumes:
+      - minio-persistence:/data
+  mc:
+    image: 'minio/mc'
+    depends_on:
+      - minio
+    container_name: mcbkp
+    entrypoint: >
+      /bin/sh -c "
+      echo /usr/bin/mc config host a src https://play.minio.io:9000 $${PLAY_ACCESS_KEY} $${PLAY_SECRET_KEY};
+      /usr/bin/mc config host a src https://play.minio.io:9000 $${PLAY_ACCESS_KEY} $${PLAY_SECRET_KEY};
+      /usr/bin/mc config host a bkp http://minio:9000 $${MINIO_ACCESS_KEY} $${MINIO_SECRET_KEY};
+      /usr/bin/mc mirror -w src bkp;
+      "
+  postgres:
+    image: 'postgres'
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345678
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  elasticsearch:
+    image: 'elasticsearch:8.8.1'
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    environment:
+      - ELASTIC_USER=elastic
+      - ELASTIC_PASSWORD=12345678
+      - ELASTIC_CONTAINER=true
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    volumes:
+      - elasticsearch-volume:/data
+volumes:
+  minio-persistence:
+  postgres-data:
+  elasticsearch-volume:
