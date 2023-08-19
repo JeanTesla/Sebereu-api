@@ -26,6 +26,8 @@ public class User {
     )
     private UUID userId;
 
+    private String name;
+
     private UUID profileImageUploadId;
 
     private String email;

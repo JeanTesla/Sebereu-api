@@ -27,6 +27,7 @@ public class AuthController {
     private final SignUpService signUpService;
 
     private final UploadProfileImageService uploadProfileImageService;
+
     private final GetProfileImageService getProfileImageService;
 
     public AuthController(
