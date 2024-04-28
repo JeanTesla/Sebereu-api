@@ -26,17 +26,13 @@ public class AuthController {
 
     private final SignUpService signUpService;
 
-    private final UploadProfileImageService uploadProfileImageService;
 
-    private final GetProfileImageService getProfileImageService;
 
     public AuthController(
             SignInService signInService,
-            SignUpService signUpService, UploadProfileImageService uploadProfileImageService, GetProfileImageService getProfileImageService) {
+            SignUpService signUpService) {
         this.signInService = signInService;
         this.signUpService = signUpService;
-        this.uploadProfileImageService = uploadProfileImageService;
-        this.getProfileImageService = getProfileImageService;
     }
 
     @PostMapping("/sign-in")
@@ -47,23 +43,6 @@ public class AuthController {
     @PostMapping("/sign-up")
     public SignUpResponseDTO doSignUp(@RequestBody SignUpRequestDTO signUpRequestDTO) {
         return signUpService.execute(signUpRequestDTO);
-    }
-
-    @GetMapping(value = "/profile-image",
-            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<InputStreamResource> getProfileImage(@RequestParam("userId") UUID userId) {
-        return getProfileImageService.execute(userId);
-    }
-
-    @PostMapping(value = "/upload-profile-image",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public void profileImageUpload(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam("userId") UUID userId) {
-        uploadProfileImageService.execute(file, userId);
     }
 
 }

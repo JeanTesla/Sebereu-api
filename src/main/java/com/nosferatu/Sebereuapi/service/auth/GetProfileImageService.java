@@ -19,6 +19,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -44,6 +45,10 @@ public class GetProfileImageService{
 
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(UserNotFoundException::new);
+
+        if(Objects.isNull(user.getProfileImageUploadId())){
+            throw new UploadNotFoundException();
+        }
 
         FileUpload upload = fileUploadRepository.findById(user.getProfileImageUploadId())
                 .orElseThrow(UploadNotFoundException::new);

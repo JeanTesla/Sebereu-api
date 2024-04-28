@@ -5,7 +5,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -28,11 +31,21 @@ public class User {
 
     private String name;
 
-    private UUID profileImageUploadId;
+    private String last_name;
 
     private String email;
 
     private String password;
+
+    private String city;
+
+    private String country;
+
+    private String postalCode;
+
+    private String aboutMe;
+
+    private UUID profileImageUploadId;
 
     @CreationTimestamp
     private Timestamp createdAt;
