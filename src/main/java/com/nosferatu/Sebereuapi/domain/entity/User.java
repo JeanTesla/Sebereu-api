@@ -29,9 +29,11 @@ public class User {
     )
     private UUID userId;
 
-    private String name;
+    private String userName;
 
-    private String last_name;
+    private String firstName;
+
+    private String lastName;
 
     private String email;
 
@@ -39,11 +41,17 @@ public class User {
 
     private String city;
 
+    private String address;
+
     private String country;
+
+    private String state;
 
     private String postalCode;
 
     private String aboutMe;
+
+    private String quickMessage;
 
     private UUID profileImageUploadId;
 

@@ -18,7 +18,7 @@ public class SignUpRequestDTO {
 
     public User toEntity(){
         return User.builder()
-                .name(this.name)
+                .userName(this.name)
                 .email(this.email)
                 .password(this.password)
                 .build();
