@@ -34,21 +34,17 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - postgres-data:/var/lib/postgresql/data
-  elasticsearch:
-    image: 'elasticsearch:8.8.1'
-    ports:
-      - '9200:9200'
-      - '9300:9300'
-    environment:
-      - ELASTIC_USER=elastic
-      - ELASTIC_PASSWORD=12345678
-      - ELASTIC_CONTAINER=true
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-    mem_limit: 1000000000
+  nginx:
+    image: nginx
     volumes:
-      - elasticsearch-volume:/data
+      - ./nginx-content:/var/www/html
+    ports:
+      - "8081:80"
+    environment:
+      - NGINX_HOST=sebereu.com
+      - NGINX_PORT=80
+      - COPY static-html-directory /usr/share/nginx/html
 volumes:
   minio-persistence:
   postgres-data:
-  elasticsearch-volume:
+  nginx-content:

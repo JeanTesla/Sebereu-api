@@ -14,11 +14,15 @@ import java.util.UUID;
 @Builder
 public class ContributionResponseDTO {
 
-    private String contributionId;
+    private UUID contributionId;
 
     private String title;
 
-    private String artist;
+    private String composer;
+
+    private Boolean isVisible;
+
+    private Long views;
 
     private Date createdAt;
 
@@ -26,7 +30,9 @@ public class ContributionResponseDTO {
         return ContributionResponseDTO.builder()
                 .contributionId(contribution.getId())
                 .title(contribution.getTitle())
-                .artist(contribution.getArtist())
+                .composer(contribution.getComposer())
+                .isVisible(contribution.getIsVisible())
+                .views(contribution.getViews())
                 .createdAt(contribution.getCreatedAt())
                 .build();
     }

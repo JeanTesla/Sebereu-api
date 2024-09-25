@@ -18,13 +18,13 @@ import java.util.UUID;
 @Builder
 public class ContributionDetailResponseDTO {
 
-    private String contributionId;
+    private UUID contributionId;
 
     private UUID userId;
 
     private String title;
 
-    private String artist;
+    private String composer;
 
     private String arrangement;
 
@@ -47,11 +47,9 @@ public class ContributionDetailResponseDTO {
                 .contributionId(contribution.getId())
                 .userId(contribution.getUserId())
                 .title(contribution.getTitle())
-                .artist(contribution.getArtist())
+                .composer(contribution.getComposer())
                 .arrangement(contribution.getArrangement())
                 .description(contribution.getDescription())
-                .musicalGenre(contribution.getMusicalGenre())
-                .sheetType(contribution.getSheetType())
                 .genrePicker(Utils.stringToStringList(contribution.getGenrePicker()))
                 .instrumentPicker(Utils.stringToStringList(contribution.getInstrumentPicker()))
                 .views(contribution.getViews())

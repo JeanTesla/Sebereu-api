@@ -1,3 +1,2 @@
-INSERT INTO public.tbl_users (user_id,created_at,email,"name","password",profile_image_upload_id,updated_at) VALUES
-	 (decode('1015EF97535241E89F8355D8C1B4E415','hex'),'2023-08-19 17:17:41.281','usuario1@gmail.com','usuario1','12345678',NULL,'2023-08-19 17:17:41.281'),
-	 (decode('E7641731A09147EEA59B555351AC223A','hex'),'2023-08-19 17:17:54.555','usuario2@gmail.com','usuario2','12345678',NULL,'2023-08-19 17:17:54.555');
+INSERT INTO public.tbl_users (user_id,user_name,first_name,last_name,email,"password",city,state,country,postal_code,address,about_me,quick_message,profile_image_upload_id,created_at,updated_at) VALUES
+	 (decode('1015EF97535241E89F8355D8C1B4E415','hex'),'usuario1','Jean','Tesla','sebereu.master@gmail.com','12345678','João Pessoa','PB','Brasil','58053-100','Josiara Telino','Sou o criador desse projeto que ajudará tanto a minha queria Pé de Cará','Deixe de ser curioso',NULL,'2023-08-19 17:17:41.281','2023-08-19 17:17:41.281');

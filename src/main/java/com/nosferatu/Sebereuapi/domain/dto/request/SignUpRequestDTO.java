@@ -8,9 +8,13 @@ import lombok.Getter;
 @Getter
 public class SignUpRequestDTO {
 
+    private String userName;
+
     private String email;
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
 
     private String password;
 
@@ -18,8 +22,10 @@ public class SignUpRequestDTO {
 
     public User toEntity(){
         return User.builder()
-                .name(this.name)
+                .userName(this.userName)
                 .email(this.email)
+                .firstName(this.firstName)
+                .lastName(this.lastName)
                 .password(this.password)
                 .build();
     }

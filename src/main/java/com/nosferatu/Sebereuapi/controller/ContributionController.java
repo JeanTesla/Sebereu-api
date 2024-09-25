@@ -1,5 +1,6 @@
 package com.nosferatu.Sebereuapi.controller;
 
+import com.nosferatu.Sebereuapi.domain.dto.request.ChangeContributionVisibilityRequestDTO;
 import com.nosferatu.Sebereuapi.domain.dto.request.ContributionRequestDTO;
 import com.nosferatu.Sebereuapi.domain.dto.response.ContributionDetailResponseDTO;
 import com.nosferatu.Sebereuapi.domain.dto.response.ContributionResponseDTO;
@@ -13,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,7 +30,7 @@ public class ContributionController {
 
     private final GetContributionService getContributionService;
 
-    private final IncreaseContributionViewService increaseContributionViewService;
+    private final ChangeVisibilityContributionService changeVisibilityContributionService;
 
     public ContributionController(
             SaveContributionService saveContributionService,
@@ -38,22 +38,21 @@ public class ContributionController {
             GetAllContributionService getAllContributionService,
             GetFileContributionService getFileContributionService,
             GetContributionService getContributionService,
-            IncreaseContributionViewService increaseContributionViewService) {
+            ChangeVisibilityContributionService changeVisibilityContributionService) {
         this.saveContributionService = saveContributionService;
         this.uploadFileContributionService = uploadFileContributionService;
         this.getAllContributionService = getAllContributionService;
         this.getFileContributionService = getFileContributionService;
         this.getContributionService = getContributionService;
-        this.increaseContributionViewService = increaseContributionViewService;
+        this.changeVisibilityContributionService = changeVisibilityContributionService;
     }
 
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get-all", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<ContributionResponseDTO> getAllContribution(
             @RequestParam(value = "userId") UUID userId,
             @RequestParam(value = "page") Integer page,
             @RequestParam(value = "size") Integer size
     ) {
-        System.out.println(userId);
         return getAllContributionService.execute(userId, page, size);
     }
 
@@ -75,7 +74,7 @@ public class ContributionController {
 
     @GetMapping(value = "/{contributionId}/file", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<InputStreamResource> getContributionFile(
-            @PathVariable(value = "contributionId") String contributionId,
+            @PathVariable(value = "contributionId") UUID contributionId,
             @RequestParam(value = "requestUserId") UUID requestUserId
     ) {
         System.out.println(contributionId);
@@ -84,9 +83,18 @@ public class ContributionController {
 
     @GetMapping(value = "/{contributionId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ContributionDetailResponseDTO getContribution(
-            @PathVariable(value = "contributionId") String contributionId
+            @PathVariable(value = "contributionId") UUID contributionId
     ) {
         return getContributionService.execute(contributionId);
+    }
+
+    @PatchMapping(value = "/{contributionId}/change-visibility",
+    consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void changeVisibility(
+            @PathVariable(value = "contributionId") UUID contributionId,
+            @RequestBody ChangeContributionVisibilityRequestDTO changeContributionVisibilityRequestDTO
+    ) {
+        changeVisibilityContributionService.execute(contributionId, changeContributionVisibilityRequestDTO);
     }
 
 }

@@ -1,25 +1,23 @@
 package com.nosferatu.Sebereuapi.service.contribution;
 
-import com.nosferatu.Sebereuapi.domain.dto.response.ContributionResponseDTO;
+import com.nosferatu.Sebereuapi.domain.dto.request.ChangeContributionVisibilityRequestDTO;
 import com.nosferatu.Sebereuapi.domain.entity.Contribution;
 import com.nosferatu.Sebereuapi.domain.repository.ContributionRepository;
 import com.nosferatu.Sebereuapi.domain.repository.UserRepository;
+import com.nosferatu.Sebereuapi.exception.ContributionNotFoundException;
 import com.nosferatu.Sebereuapi.exception.UserNotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
-public class GetAllContributionService {
+public class ChangeVisibilityContributionService {
 
     private final ContributionRepository contributionRepository;
 
     private final UserRepository userRepository;
 
-    public GetAllContributionService(
+    public ChangeVisibilityContributionService(
             ContributionRepository contributionRepository,
             UserRepository userRepository
     ) {
@@ -27,15 +25,15 @@ public class GetAllContributionService {
         this.userRepository = userRepository;
     }
 
-    public Page<ContributionResponseDTO> execute(UUID userId, Integer page, Integer size){
+    public void execute(UUID contributionId, ChangeContributionVisibilityRequestDTO changeContributionVisibilityRequestDTO){
 
-        userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        UUID userId = changeContributionVisibilityRequestDTO.getUserId();
 
-        Pageable pageRequest = PageRequest.of(page, size);
+        Contribution contribution = contributionRepository.findByIdAndUserId(contributionId, userId)
+                .orElseThrow(ContributionNotFoundException::new);
 
-        Page<Contribution> contributions = contributionRepository.findByUserIdOrderByCreatedAtDesc(userId, pageRequest);
+        contribution.setIsVisible(!contribution.getIsVisible());
 
-        return contributions.map(ContributionResponseDTO::fromContributionEntity);
+        contributionRepository.save(contribution);
     }
 }
-
