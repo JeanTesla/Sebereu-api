@@ -2,7 +2,7 @@
 
 -- Drop table
 
-DROP TABLE public.tbl_users;
+DROP TABLE IF EXISTS public.tbl_users;
 
 CREATE TABLE public.tbl_users (
 	user_id bytea NOT NULL,

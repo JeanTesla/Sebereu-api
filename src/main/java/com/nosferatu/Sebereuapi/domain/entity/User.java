@@ -5,15 +5,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tbl_users")
+@Table(
+        name = "tbl_users",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "UniqueUserNameAndEmail", columnNames = { "userName", "email" })
+        })
 @Getter
 @Setter
 @Builder
@@ -42,8 +43,6 @@ public class User {
     private String city;
 
     private String address;
-
-    private String country;
 
     private String state;
 

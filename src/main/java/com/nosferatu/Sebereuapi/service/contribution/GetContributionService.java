@@ -6,6 +6,8 @@ import com.nosferatu.Sebereuapi.domain.repository.ContributionRepository;
 import com.nosferatu.Sebereuapi.exception.ContributionNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class GetContributionService {
 
@@ -15,7 +17,7 @@ public class GetContributionService {
         this.contributionRepository = contributionRepository;
     }
 
-    public ContributionDetailResponseDTO execute(String contributionId){
+    public ContributionDetailResponseDTO execute(UUID contributionId){
         Contribution contribution = contributionRepository.findById(contributionId)
                 .orElseThrow(ContributionNotFoundException::new);
 

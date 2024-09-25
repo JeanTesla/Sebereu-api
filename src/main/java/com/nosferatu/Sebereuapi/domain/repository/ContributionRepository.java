@@ -3,37 +3,25 @@ package com.nosferatu.Sebereuapi.domain.repository;
 import com.nosferatu.Sebereuapi.domain.entity.Contribution;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.annotations.Query;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
 @Repository
-public interface ContributionRepository extends ElasticsearchRepository<Contribution, String> {
+public interface ContributionRepository extends PagingAndSortingRepository<Contribution, UUID> {
 
     Optional<Contribution> findByUploadId(UUID uploadId);
 
-    Page<Contribution> findByUserId(UUID userId, Pageable pageable);
+    Optional<Contribution> findByIdAndUserId(UUID contributionId, UUID userId);
 
-    @Query("{\"bool\": {\n" +
-            "\t\t\t\"must\": [\n" +
-            "\t\t\t\t{\n" +
-            "\t\t\t\t\t\"multi_match\": {\n" +
-            "\t\t\t\t\t\t\"query\": \"?0\",\n" +
-            "\t\t\t\t\t\t\"zero_terms_query\": \"all\",\n" +
-            "\t\t\t\t\t\t\"analyzer\": \"standard\",\n" +
-            "\t\t\t\t\t\t\"fields\": [\"title\", \"artist\"],\n" +
-            "\t\t\t\t\t\t\"minimum_should_match\":\"99%\"\n" +
-            "\t\t\t\t\t}\n" +
-            "\t\t\t\t}\n" +
-            "\t\t\t]\n" +
-            "\t\t}\n" +
-            "\t}}")
-    Page<Contribution> findByTitleOrArtistUsingCustomQuery(String filter, Pageable pageable);
+    Page<Contribution> findByUserIdOrderByCreatedAtDesc(UUID userId, Pageable pageable);
+
+    @Query(value = "select tc from Contribution tc \n" +
+            "where tc.normalizedIndex like %?1%\n" +
+            "and tc.isVisible IS true\n" +
+            "order by tc.createdAt desc")
+    Page<Contribution> findByNormalizedIndex(String filter, Pageable pageable);
 }

@@ -22,8 +22,6 @@ public class UserRequestDTO {
 
     private String address;
 
-    private String country;
-
     private String state;
 
     private String postalCode;
@@ -40,7 +38,6 @@ public class UserRequestDTO {
         user.setAddress(this.getAddress());
         user.setState(this.getState());
         user.setCity(this.getCity());
-        user.setCountry(this.getCountry());
         user.setPostalCode(this.getPostalCode());
         user.setAboutMe(this.getAboutMe());
         user.setQuickMessage(this.getQuickMessage());

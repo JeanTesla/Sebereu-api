@@ -49,7 +49,7 @@ public class GetFileContributionService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<InputStreamResource> execute(String contributionId, UUID requestUserId) {
+    public ResponseEntity<InputStreamResource> execute(UUID contributionId, UUID requestUserId) {
 
         Contribution contribution = contributionRepository.findById(contributionId)
                 .orElseThrow(ContributionNotFoundException::new);

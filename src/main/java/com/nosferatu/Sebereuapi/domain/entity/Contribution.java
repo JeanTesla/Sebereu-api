@@ -3,31 +3,29 @@ package com.nosferatu.Sebereuapi.domain.entity;
 import com.nosferatu.Sebereuapi.domain.enumerated.MusicalGenreEnum;
 import com.nosferatu.Sebereuapi.domain.enumerated.SheetTypeEnum;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.sql.Timestamp;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
-
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Document(indexName="contribution")
+@Entity
+@Table(name = "tbl_contributions")
 public class Contribution {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    private UUID id;
 
     private UUID userId;
 
@@ -35,21 +33,21 @@ public class Contribution {
 
     private String title;
 
-    private String artist;
+    private String composer;
 
     private String arrangement;
 
     private String description;
-
-    private MusicalGenreEnum musicalGenre;
-
-    private SheetTypeEnum sheetType;
 
     private String genrePicker;
 
     private String instrumentPicker;
 
     private Long views;
+
+    private String normalizedIndex;
+
+    private Boolean isVisible;
 
     private Date createdAt;
 

@@ -23,7 +23,7 @@ public class ContributionRequestDTO {
 
     private String title;
 
-    private String artist;
+    private String composer;
 
     private String arrangement;
 
@@ -43,11 +43,9 @@ public class ContributionRequestDTO {
                 .userId(this.userId)
                 .uploadId(this.uploadId)
                 .title(this.title)
-                .artist(this.artist)
+                .composer(this.composer)
                 .arrangement(this.arrangement)
                 .description(this.description)
-                .musicalGenre(this.musicalGenre)
-                .sheetType(this.sheetType)
                 .genrePicker(Utils.stringListToString(this.genrePicker))
                 .instrumentPicker(Utils.stringListToString(this.instrumentPicker))
                 .createdAt(new Date())

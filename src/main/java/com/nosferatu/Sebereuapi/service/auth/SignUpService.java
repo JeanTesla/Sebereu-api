@@ -5,6 +5,7 @@ import com.nosferatu.Sebereuapi.domain.dto.response.SignUpResponseDTO;
 import com.nosferatu.Sebereuapi.domain.entity.User;
 import com.nosferatu.Sebereuapi.domain.repository.UserRepository;
 import com.nosferatu.Sebereuapi.exception.UserEmailAlreadyExistsException;
+import com.nosferatu.Sebereuapi.exception.UserNameAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +22,10 @@ public class SignUpService {
 
         if(userRepository.findByEmail(signUpRequestDTO.getEmail()).isPresent()){
             throw new UserEmailAlreadyExistsException();
+        }
+
+        if(userRepository.findByUserName(signUpRequestDTO.getUserName()).isPresent()){
+            throw new UserNameAlreadyExistsException();
         }
 
         User savedUser = userRepository.save(signUpRequestDTO.toEntity());

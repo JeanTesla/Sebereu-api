@@ -7,11 +7,14 @@ import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Builder
 @Getter
 public class UserResponseDTO {
+
+    private UUID userId;
 
     private String userName;
 
@@ -24,8 +27,6 @@ public class UserResponseDTO {
     private String city;
 
     private String address;
-
-    private String country;
 
     private String state;
 
@@ -40,6 +41,7 @@ public class UserResponseDTO {
 
     public static UserResponseDTO fromUserEntity(User user){
         return UserResponseDTO.builder()
+                .userId(user.getUserId())
                 .userName(user.getUserName())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
@@ -47,7 +49,6 @@ public class UserResponseDTO {
                 .address(user.getAddress())
                 .state(user.getState())
                 .city(user.getCity())
-                .country(user.getCountry())
                 .postalCode(user.getPostalCode())
                 .aboutMe(user.getAboutMe())
                 .quickMessage(user.getQuickMessage())
