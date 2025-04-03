@@ -2,6 +2,7 @@ package com.nosferatu.Sebereuapi.controller;
 
 import com.nosferatu.Sebereuapi.domain.dto.request.ChangeContributionVisibilityRequestDTO;
 import com.nosferatu.Sebereuapi.domain.dto.request.ContributionRequestDTO;
+import com.nosferatu.Sebereuapi.domain.dto.request.UpdateContributionRequestDTO;
 import com.nosferatu.Sebereuapi.domain.dto.response.ContributionDetailResponseDTO;
 import com.nosferatu.Sebereuapi.domain.dto.response.ContributionResponseDTO;
 import com.nosferatu.Sebereuapi.domain.dto.response.FileUploadResponseDTO;
@@ -32,19 +33,23 @@ public class ContributionController {
 
     private final ChangeVisibilityContributionService changeVisibilityContributionService;
 
+    private final UpdateContributionService updateContributionService;
+
     public ContributionController(
             SaveContributionService saveContributionService,
             UploadFileContributionService uploadFileContributionService,
             GetAllContributionService getAllContributionService,
             GetFileContributionService getFileContributionService,
             GetContributionService getContributionService,
-            ChangeVisibilityContributionService changeVisibilityContributionService) {
+            ChangeVisibilityContributionService changeVisibilityContributionService,
+            UpdateContributionService updateContributionService) {
         this.saveContributionService = saveContributionService;
         this.uploadFileContributionService = uploadFileContributionService;
         this.getAllContributionService = getAllContributionService;
         this.getFileContributionService = getFileContributionService;
         this.getContributionService = getContributionService;
         this.changeVisibilityContributionService = changeVisibilityContributionService;
+        this.updateContributionService = updateContributionService;
     }
 
     @GetMapping(value = "/get-all", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -86,6 +91,15 @@ public class ContributionController {
             @PathVariable(value = "contributionId") UUID contributionId
     ) {
         return getContributionService.execute(contributionId);
+    }
+
+    @PutMapping(value = "/{contributionId}",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateContribution(
+            @PathVariable(value = "contributionId") UUID contributionId,
+            @RequestBody UpdateContributionRequestDTO updateContributionRequestDTO
+    ) {
+        updateContributionService.execute(contributionId, updateContributionRequestDTO);
     }
 
     @PatchMapping(value = "/{contributionId}/change-visibility",
